@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="estilo.css") }}">
+</head>
+</html>
+	<body>
+		<header>
+			<div class = "logotipo">
+				<img src = "{{ url_for("static", filename="oraclogo.png") }}" width = "100" alt="logotipo">
+			</div>
+			<nav>
+				<ul> 
+					<li><a href="#">Empleados DB</a></li>
+				</ul>
+			</nav>
+		</header>
+		
+		<section class = "main"> 
+			<section class = "articles">
+				<article>
+                {% block content %}{% endblock %}
+				</article>
+			</section>
+
+			<aside>
+				{% block aside %} {% endblock %}
+			</aside>
+		</section>
+		
+		<footer>
+            <h3>Bases de Datos 2</h3>
+            <p>Oscar Bautista - Diego Hernandez - 2020</p>
+		</footer>
+	</body>
+</html>
