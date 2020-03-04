@@ -6,6 +6,10 @@ from forms import SignupForm, PostForm
 import os, cx_Oracle
 
 
+# oracle nombre de host localhost 
+# pprt 1521
+# sid xe
+
 app = Flask(__name__)
 api = Api(app)
 """app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
@@ -23,6 +27,22 @@ db_connect = os.environ.get('DBAAS_DEFAULT_CONNECT_DESCRIPTOR', "localhost:1521/
 service_port = port=os.environ.get('PORT', '8080')"""
 
 posts = []
+
+
+
+def show_error(e):
+    errorObj, = e.args
+    return  (errorObj.message, errorObj.code)
+
+@app.route("/status")
+def conexion():
+    try:
+        con = cx_Oracle.connect('system/0271@xe')
+        v = con.version
+        con.close()
+    except cx_Oracle.DatabaseError as e: 
+        v = show_error(e)
+    return "Se establecio conexion con: " + str(v)   
 
 @app.route("/")
 def index():
