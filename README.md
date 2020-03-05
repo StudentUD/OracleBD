@@ -31,6 +31,50 @@ Si se acaba de clonar el repositorio se debe instalar las dependencias del proye
 - Activar variable ```source venv-project/bin/activate ```
 - Instalar dependencias ```pip3 install -r requirements.txt ```
 
+
+# Creacion de base de datos
+
+para ver la conexion atual ```SHOW CON_NAME```
+
+Cremos nuestro usuario ```CREATE USER app IDENTIFIED BY "flask";``` si nosindica error ***ORA-65096:*** entonces 
+
+En oracle a partir de la version 12c se epieza aimplemnetar una serie de cambiso e n la arquitectura de la bases de datos, una de llas es la implemnracion de las plugables dabases 
+
+- para ver nuestar base de datos contenedor CBD ```select name,open_mode, cdb from v$database;``` debera mostrarnos **XE** si es express
+- para ver las bd plugable conectados es plugbales en sqlplus indicamos ```show pdbs;``` aqui nos mostrara **xepdb1** enm modo read write lo cual indica que la podemos utilizar 
+- procedemos a cambiar de base de datos ``` ALTER SESSION SET CONTAINER=xepdb1; ```
+- reinteamos crear nuestro usuario ```CREATE USER app IDENTIFIED BY "flask";```
+
+ Estos de debn acambiar 
+
+- por ultimo le damos los permisos correspondientes ``` GRANT ALL PRIVILEGES TO app;```
+
+Es importate saber el nombre del servicio donde vamos a usar nuestra BD ```SELECT SYS_CONTEXT('USERENV', 'CON_ID') AS con_id, SYS_CONTEXT('USERENV', 'SERVICE_NAME') AS service_name FROM   dual;```
+nos mostrar el  servicio que debemos utilizar
+- host puede ser el nombre del equipo o ip 
+- xepdb1 es el nombre del servicio 
+
+
+vamos a modificar nuestro tnsnames de aplicacion
+
+<pre><code>
+XE =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = think)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = XE)
+    )
+  )
+</pre></code>
+
+
+
+Por ultimo acceder a sqlplus y ejecutar los scripts que se encuntran en este repositorio /baseDatos
+
+```start direccion_scriptOracle``` y luego lo mismo con postScript
+
+
 # Arrancar proyecto Flask 
 . Activar variable 
 - ```export FLASK_APP="run.py" ```
