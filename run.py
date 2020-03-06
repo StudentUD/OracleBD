@@ -3,7 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 from forms import SignupForm, PostForm
 
-import os, cx_Oracle
+
+#from flask_login import login_required, current_user
+
+
+
+import manager
 
 
 # oracle nombre de host localhost 
@@ -30,19 +35,10 @@ posts = []
 
 
 
-def show_error(e):
-    errorObj, = e.args
-    return  (errorObj.message, errorObj.code)
 
 @app.route("/status")
 def conexion():
-    try:
-        con = cx_Oracle.connect('system/0271@xe')
-        v = con.version
-        con.close()
-    except cx_Oracle.DatabaseError as e: 
-        v = show_error(e)
-    return "Se establecio conexion con: " + str(v)   
+    return manager.verify_satatus() 
 
 @app.route("/")
 def index():
@@ -84,5 +80,43 @@ def show_signup_form():
         return redirect(url_for('index'))
     return render_template("signup_form.html", form=form)
 
+
+
+def generate_route(u):
+    return u.lower().strip().replace(" ","_")
+
+
+
+@app.route("/sales_representative", methods=["GET", "POST"])
+def sales_representative():
+    manager.execute_sentence("select * from s_item")
+    return render_template('/admin/ordenes/sales_representative.html')
+    
+    
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    error= None
+    manager.test(request)
+    if request.method == 'POST': 
+        l = manager.verify_login(request.form['user'], request.form['password'])
+        if l!=[]:
+            f,l,page=l[0]
+            page = generate_route(page)
+            print(page)
+            return redirect(url_for(page))
+        else:
+            error = 'verifique usuario o contraseña '
+    return render_template('/index.html',error=error)
+
+
+
+
 if __name__ == '__main__':
     app.run(debug = True, port =8000)
+    
+    
+
+
+
+
+    

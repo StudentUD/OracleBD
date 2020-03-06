@@ -3,32 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
-	<link rel="stylesheet" href="{{ url_for("static", filename="estilo.css") }}">
+	<link rel="stylesheet" href="{{ url_for("static", filename="css/estilo.css") }}">
+	<script src="{{ url_for("static", filename="js/validator.js") }}"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	 
 </head>
 </html>
 	<body>
 		<header>
-			<div class = "logotipo">
-				<img src = "{{ url_for("static", filename="oraclogo.png") }}" width = "100" alt="logotipo">
-			</div>
-			<nav>
-				<ul> 
+
+			<nav class="row">
+				<div class = "logotipo">
+					<img src = "{{ url_for("static", filename="img/oraclogo.png") }}" alt="logotipo">
+				</div>
+				<ul class="center-vi"> 
 					<li><a href="#">Empleados DB</a></li>
 				</ul>
 			</nav>
 		</header>
 		
-		<section class = "main"> 
-			<section class = "articles">
-				<article>
-                {% block content %}{% endblock %}
-				</article>
-			</section>
-
-			<aside>
-				{% block aside %} {% endblock %}
-			</aside>
+		<section class = "container"> 
+			{% block aside %} {% endblock %}
+			<article class="center-hi">
+				{% block content %}{% endblock %}
+			</article>
 		</section>
 		
 		<footer>

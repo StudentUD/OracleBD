@@ -1,0 +1,108 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body{
+	background: #f5f5f5 ;
+	height: 100%;
+}
+
+.row
+{
+	display:flex; 
+	flex-direction: row;
+}
+.col
+{
+	display:flex; 
+	flex-direction: column;
+	align-items: center;
+}
+
+.center-vi{
+	display:flex; 
+	flex-direction: row;
+	align-items: center;
+
+}
+.center-hi{
+	display:flex; 
+	flex-direction: row;
+	justify-content: center;
+
+}
+a{
+	color: black;
+	text-decoration: none;
+}
+
+header img {
+	width: 100px; 
+	padding: 0 10px;
+}
+
+header
+{
+	padding: 20px;
+	background: rgb(202, 202, 202) ;
+	box-shadow:  0px 10px 20px rgba(202, 202, 202,.5);
+
+}
+header ul {
+	list-style: none;
+	color: white;
+	padding-left: 20px;
+}
+header ul li *{
+	color: white;
+	font-weight: bolder;
+}
+
+/* contenedor */
+.container{
+	display: grid;
+	grid-template-columns: 20% 1fr;
+}
+aside{
+ background: red;
+}
+
+article{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+
+/* footer */
+ footer{
+	position: absolute;
+	 bottom: 0px;
+	background:#000;
+	color:#fff;
+	padding:10px 0px;
+	text-align:center;
+	width: 100%;
+ }
+
+/* validaores por css */
+ input:invalid {
+	box-shadow: 2px 2px 2px red;
+  }
+  
+  input:valid {
+	/* box-shadow: 2px 2px 2px green; */
+  }
+
+
+
+  /* formularios */
+  form{
+	  padding: 20px;
+	  background: rgb(202, 202, 202);
+	  box-shadow: 0px 10px 20px rgba(202, 202, 202,.5)
+  }
+  form label{
+	  padding: 10px 0;
+  }

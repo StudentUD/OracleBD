@@ -1,0 +1,27 @@
+{% extends "admin/ordenes/layout_admin.html" %}
+    
+{% block title %}
+    Ordenes 
+{% endblock %}
+
+{% block content %}
+<form id="login" class="col" action="/login" method="POST" novalidate>
+    <label for="cliente">Cliente</label>
+    <input type="text" id="cliente" name="cliente" value="" required>
+    <label for="txpass"> Contraseña:</label>
+    <input type="tetx" id="txpass" name="password" value="" required>
+    <input type="submit" value="Submit">
+    {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}</p>
+    {%endif%}
+  </form> 
+{% endblock %}
+
+{% block menu%}
+{{super()}}
+    <ul>
+        {% for opcion in opciones %}
+            <li>{{ opciones.name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
