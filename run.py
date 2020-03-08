@@ -3,9 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 from forms import SignupForm, PostForm
 
-
 #from flask_login import login_required, current_user
-
 import manager
 
 # oracle nombre de host localhost 
@@ -14,24 +12,6 @@ import manager
 
 app = Flask(__name__)
 api = Api(app)
-"""app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:testing@localhost:5432/miniblog'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-login_manager = LoginManager(app)
-login_manager.login_view = "login"
-db = SQLAlchemy(app)
-
-
-
-db_user = os.environ.get('DBAAS_USER_NAME', 'SYSTEM')
-db_password = os.environ.get('DBAAS_USER_PASSWORD', 'Welcome1_')
-db_connect = os.environ.get('DBAAS_DEFAULT_CONNECT_DESCRIPTOR', "localhost:1521/ORCL")
-service_port = port=os.environ.get('PORT', '8080')"""
-
-posts = []
-
-
-
 
 @app.route("/status")
 def conexion():
@@ -39,56 +19,20 @@ def conexion():
 
 @app.route("/")
 def index():
-    """ connection = cx_Oracle.connect(db_user, db_password, db_connect)
-    cur = connection.cursor()
-    cur.execute("SELECT 'Hello, World from Oracle DB!' FROM DUAL")
-    col = cur.fetchone()[0]
-    cur.close()
-    connection.close()"""
-    return render_template("index.html", posts=posts)
+    return render_template("index.html")
 
-@app.route("/p/<string:slug>/")
-def show_post(slug):
-    return "Mostrando el post {}".format(slug)
-
-@app.route("/admin/post/", methods=['GET', 'POST'], defaults={'post_id': None})
-@app.route("/admin/post/<int:post_id>/", methods=['GET', 'POST'])
-def post_form(post_id):
-    form = PostForm()
-    if form.validate_on_submit():
-        title = form.title.data
-        title_slug = form.title_slug.data
-        content = form.content.data
-        post = {'title': title, 'title_slug': title_slug, 'content': content}
-        posts.append(post)
-        return redirect(url_for('index'))
-    return render_template("admin/post_form.html", form=form)
-
-@app.route("/signup/", methods=["GET", "POST"])
-def show_signup_form():
-    form = SignupForm()
-    if form.validate_on_submit():
-        name = form.name.data
-        email = form.email.data
-        password = form.password.data
-        next = request.args.get('next', None)
-        if next:
-            return redirect(next)
-        return redirect(url_for('index'))
-    return render_template("signup_form.html", form=form)
-
-
-
-def generate_route(u):
-    return u.lower().strip().replace(" ","_")
-
-
-
-@app.route("/sales_representative", methods=["GET", "POST"])
+@app.route("/sales_representative", methods=["GET"])
 def sales_representative():
-    manager.execute_sentence("select * from s_item")
-    return render_template('/admin/ordenes/sales_representative.html')
+    item_list =  manager.get_list_of_products()
+    return render_template('/admin/ordenes/sales_representative.html', items = item_list)
     
+
+
+
+@app.route("/sales", methods=["GET"])
+def sales():
+    item_list =  manager.execute_sentence("select * from s_item")
+    return jsonify(item_list)
     
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -97,13 +41,20 @@ def login():
     if request.method == 'POST': 
         l = manager.verify_login(request.form['user'], request.form['password'])
         if l!=[]:
-            f,l,page=l[0]
+            first_name,last_name,page=l[0]
             page = generate_route(page)
             print(page)
-            return redirect(url_for(page))
+            mesage={"fn":first_name}
+            return redirect(url_for(page,mes=mesage))
         else:
-            error = 'Verifique usuario o contraseña '
+            error = 'Verifique usuario o contrasenia '
     return render_template('/index.html',error=error)
+
+
+def generate_route(u):
+    return u.lower().strip().replace(" ","_")
+
+
 
 if __name__ == '__main__':
     app.run(debug = True, port =8000)

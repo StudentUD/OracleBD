@@ -1,3 +1,4 @@
+# Manual https://cx-oracle.readthedocs.io/en/latest/user_guide/sql_execution.html
 import cx_Oracle
 import pandas as pd
 
@@ -58,12 +59,17 @@ def execute_sentence(sentencia,tupla=()):
         print(sentencia)
         cur.execute(sentencia,tupla)
         listR=list(cur)
+
+        if listR==[]:
+            print("Any response")
+
         cur.close()
         con.close()
         print("volando\n")
         show_cur(listR)
 
-    except cx_Oracle.DatabaseError as e: 
+    except cx_Oracle.DatabaseError as e:
+        print("Error") 
         v = show_error(e)
     return listR  
 
@@ -75,3 +81,8 @@ def show_cur(curs):
     print("resulado")
     for e in curs:
         print(e)
+
+
+
+def get_list_of_products():
+    return execute_sentence('select p.id, p.name, p.short_desc, p.suggested_whlsl_price, i.amount_in_stock, w.city, w.state from s_product p, s_inventory i, s_warehouse w where p.id=i.product_id and i.warehouse_id=w.id')

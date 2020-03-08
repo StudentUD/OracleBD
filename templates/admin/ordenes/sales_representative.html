@@ -5,17 +5,26 @@
 {% endblock %}
 
 {% block content %}
-<form id="login" class="col" action="/login" method="POST" novalidate>
-    <label for="cliente">Cliente</label>
-    <input type="text" id="cliente" name="cliente" value="" required>
-    <label for="txpass"> Contraseña:</label>
-    <input type="tetx" id="txpass" name="password" value="" required>
-    <input type="submit" value="Submit">
-    {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}</p>
-    {%endif%}
-  </form> 
-{% endblock %}
+<div class="col">
+
+    {% if items%}
+    Productos
+    <div class="col">
+        
+        {% for item in items %}
+        <div class="row">
+            {% for dato in item %}
+            <div>
+                {{dato}}
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif%}
+    
+</div>
+    {% endblock %}
 
 {% block menu%}
 {{super()}}
