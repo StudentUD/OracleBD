@@ -117,21 +117,20 @@ intalcion de client  revisar los link aqui https://www.oracle.com/database/techn
 crear una carpeta especifica 
 ``` mkdir cliente && cd cliente ```
 
-- basic ``` wget ttps://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip ``` 
+- basic ``` wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip ``` 
 - sql   ``` wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-sqlplus-linux.x64-19.6.0.0.0dbru.zip ```
 - sdk   ``` wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip ```
 
-Descargamos y descmpimimos todos los paquetes
+Descargamos y descomprimimos todos los paquetes
 
-``` unzip instantclient-basic-linux.x64-19.6.0.0.0dbru.zip   ```
-``` unzip instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip     ```  
-``` unzip instantclient-sqlplus-linux.x64-19.6.0.0.0dbru.zip ```    
+- ``` unzip instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip     ```  
+- ``` unzip instantclient-sqlplus-linux.x64-19.6.0.0.0dbru.zip ```    
 
 Enlas verisones actuales no es necesario crear los enlaces simbolicos 
 
--```sudo apt-get install libaio11``` en algunas distos es ```libaio```
+- ```sudo apt-get install libaio1``` en algunas distros es ```libaio```
 
-Importamos la cariable 
+Importamos la variable 
 ```export LD_LIBRARY_PATH=$(pwd)``` Con el fin de poder ejecutar el ./sqlplus, si esta fuera de la carpeta ```export LD_LIBRARY_PATH=~/cliente/instantclient_19_6```
 
 

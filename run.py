@@ -6,10 +6,7 @@ from forms import SignupForm, PostForm
 
 #from flask_login import login_required, current_user
 
-
-
 import manager
-
 
 # oracle nombre de host localhost 
 # pprt 1521
@@ -38,7 +35,7 @@ posts = []
 
 @app.route("/status")
 def conexion():
-    return manager.verify_satatus() 
+    return manager.verify_satus() 
 
 @app.route("/")
 def index():
@@ -105,18 +102,8 @@ def login():
             print(page)
             return redirect(url_for(page))
         else:
-            error = 'verifique usuario o contraseña '
+            error = 'Verifique usuario o contraseña '
     return render_template('/index.html',error=error)
-
-
-
 
 if __name__ == '__main__':
     app.run(debug = True, port =8000)
-    
-    
-
-
-
-
-    
