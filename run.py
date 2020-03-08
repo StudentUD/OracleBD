@@ -32,18 +32,18 @@ def sales():
     item_list =  manager.execute_sentence("select * from s_item")
     return jsonify(item_list)
     
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["POST"])
 def login():
     error= None
     manager.test(request)
     if request.method == 'POST': 
-        l = manager.verify_login(request.form['user'], request.form['password'])
-        if l!=[]:
-            first_name,last_name,page=l[0]
-            page = generate_route(page)
-            print(page)
-            mesage={"fn":first_name}
-            return redirect(url_for(page,mes=mesage))
+        d = manager.verify_login(request.form['user'], request.form['password'])
+        if d['rows']!=[]:
+            e=d['rows'][0]
+           
+            first_name,last_name,title=e   
+            page = generate_route(title)
+            return redirect(url_for(page))
         else:
             error = 'Verifique usuario o contrasenia '
     return render_template('/index.html',error=error)

@@ -4,6 +4,7 @@ import cx_Oracle
 import pandas as pd
 
 url_conexion= 'app/flask@xepdb1'
+
 def verify_satus():
     try:
         con = cx_Oracle.connect(url_conexion)
@@ -14,9 +15,9 @@ def verify_satus():
     return "Se establecio conexion con: " + str(v)  
 
 def verify_login(user,passw):
-    return execute_sentence("select first_name, last_name,title from s_emp where userid = :1 and id = :2",(user,passw))
+    # select e.first_name, e.last_name, et.title from s_emp e, s_emp_title et where userid ='adumas'  and id =15 and e.id =et.emp_id and rownum = 1 order by consec desc;
 
-
+    return execute_sentence("select e.first_name, e.last_name, et.title from s_emp e, s_emp_title et where userid  = :1 and id = :2 and e.id =et.emp_id and rownum = 1 order by consec desc",(user,passw))
 
 def test_html(request):
     cad=""
@@ -53,7 +54,8 @@ def test(request):
         print("{}:{}".format(item,value))
 
 def execute_sentence(sentencia,tupla=()):
-    listR=[]
+    listRes=[]
+    listCol=[]
     try:
         con = cx_Oracle.connect(url_conexion)
         cur = con.cursor()
@@ -74,7 +76,7 @@ def execute_sentence(sentencia,tupla=()):
 
 
     except cx_Oracle.DatabaseError as e:
-        print("Error de BAse de datos") 
+        print("Error de Base de datos") 
         v = show_error(e)
     return {"columns": listCol, "rows": listRes} 
 
@@ -88,6 +90,8 @@ def show_cur(curs):
         print(e)
 
 
+def get_client_by_phone(phone):
+    return execute_sentence(' select id, name, phone from s_customer where phone=:1',(phone))
 
 def get_list_of_products():
     return execute_sentence('select p.id as Codigo, p.name as Nombre, p.short_desc as Descripcion, p.suggested_whlsl_price as Precio, i.amount_in_stock as Cantidad_Disponble, w.city as Ciudad, w.state as Estado from s_product p, s_inventory i, s_warehouse w where p.id=i.product_id and i.warehouse_id=w.id')
