@@ -23,11 +23,9 @@ def index():
 
 @app.route("/sales_representative", methods=["GET"])
 def sales_representative():
-    item_list =  manager.get_list_of_products()
-    return render_template('/admin/ordenes/sales_representative.html', items = item_list)
+    data=  manager.get_list_of_products()
+    return render_template('/admin/ordenes/sales_representative.html', table = data, opciones=["Producto","Cliente"])
     
-
-
 
 @app.route("/sales", methods=["GET"])
 def sales():
@@ -53,7 +51,6 @@ def login():
 
 def generate_route(u):
     return u.lower().strip().replace(" ","_")
-
 
 
 if __name__ == '__main__':

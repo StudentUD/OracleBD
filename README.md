@@ -68,11 +68,59 @@ XE =
   )
 </pre></code>
 
+- Se recomienda revisar el archvo litenr.ora qu coresponde al servicio de escucha de oracle, modificar por el host correspondinete
 
+``` lsnrctl status``` te permite ver si es listener esta activo 
+Si no se encuebtra entonces 
+
+``` lsnrctl start ``` si no carga ir a services.msc
+
+
+[Ver solucion  adaptador ](http://www.rebellionrider.com/sql-developer-error-the-network-adapter-could-not-establish-the-connection/)
+
+
+**Se recomienda primero reinciar el oraclelistener y luego oracleService**
+
+
+##### Cannot locate a 64-bit Oracle Client library
+intalcion de client  revisar los link [aqui](https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html)
+
+crear una carpeta especifica 
+``` mkdir cliente && cd cliente ```
+
+- basic ``` wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip ``` 
+- sql   ``` wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-sqlplus-linux.x64-19.6.0.0.0dbru.zip ```
+- sdk   ``` wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip ```
+
+Descargamos y descomprimimos todos los paquetes
+
+- ```unzip instantclient-basic-linux.x64-19.6.0.0.0dbru.zip ``` 
+- ``` unzip instantclient-sqlplus-linux.x64-19.6.0.0.0dbru.zip ```    
+- ``` unzip instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip     ```  
+
+Enlas verisones actuales no es necesario crear los enlaces simbolicos 
+
+- ```sudo apt-get install libaio1``` en algunas distros es ```libaio```
+
+Importamos la variable 
+```export LD_LIBRARY_PATH=$(pwd)``` Con el fin de poder ejecutar el ./sqlplus, si esta fuera de la carpeta ```export LD_LIBRARY_PATH=~/cliente/instantclient_19_6```
+
+
+##### TNS listener 
+[Tns listener oracle stackoverflow]( https://stackoverflow.com/questions/13358656/oracle-client-ora-12541-tnsno-listener)
+1. Editar liter.ora Ubicado en la carpet HOME/network/admin/lister.ora
+2. Modificar el listener en HOST=0.0.0.0
+3. Reicniar servicio oracleservice*
+
+Si el error persiet entonces modificaremos la conexion tnsnames.ora del cliente
+- en el caso perosna opie el mismo que tenia el server y lo pegue en $LD_LIBRARY_PATH/networks/admin/
 
 Por ultimo acceder a sqlplus y ejecutar los scripts que se encuntran en este repositorio /baseDatos
 
 ```start direccion_scriptOracle``` y luego lo mismo con postScript
+
+
+
 
 
 # Arrancar proyecto Flask 
@@ -108,37 +156,3 @@ cumplir el objetivo lo deben hacer.
 - https://www.geeksforgeeks.org/oracle-database-connection-in-python/amp/
 - https://flask.palletsprojects.com/en/1.1.x/patterns/templateinheritance/
 
-
-### Errores 
-
-##### Cannot locate a 64-bit Oracle Client library
-intalcion de client  revisar los link aqui https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
-
-crear una carpeta especifica 
-``` mkdir cliente && cd cliente ```
-
-- basic ``` wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip ``` 
-- sql   ``` wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-sqlplus-linux.x64-19.6.0.0.0dbru.zip ```
-- sdk   ``` wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip ```
-
-Descargamos y descomprimimos todos los paquetes
-
-- ``` unzip instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip     ```  
-- ``` unzip instantclient-sqlplus-linux.x64-19.6.0.0.0dbru.zip ```    
-
-Enlas verisones actuales no es necesario crear los enlaces simbolicos 
-
-- ```sudo apt-get install libaio1``` en algunas distros es ```libaio```
-
-Importamos la variable 
-```export LD_LIBRARY_PATH=$(pwd)``` Con el fin de poder ejecutar el ./sqlplus, si esta fuera de la carpeta ```export LD_LIBRARY_PATH=~/cliente/instantclient_19_6```
-
-
-##### TNS listener 
-https://stackoverflow.com/questions/13358656/oracle-client-ora-12541-tnsno-listener
-1. Editar liter.ora Ubicado en la carpet HOME/network/admin/lister.ora
-2. Modificar el listener en HOST=0.0.0.0
-3. Reicniar servicio oracleservice*
-
-Si el error persiet entonces modificaremos la conexion tnsnames.ora del cliente
-- en el caso perosna opie el mismo que tenia el server y lo pegue en $LD_LIBRARY_PATH/networks/admin/

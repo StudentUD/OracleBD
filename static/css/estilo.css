@@ -71,19 +71,23 @@ aside{
 
 article{
 	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-bottom: 100px;
 }
 
 
 /* footer */
  footer{
-	position: absolute;
+	position: fixed;
 	 bottom: 0px;
 	background:#000;
 	color:#fff;
-	padding:10px 0px;
+	padding:5px 0px;
 	text-align:center;
 	width: 100%;
+ }
+
+ footer * {
+	 font-size: 10px;
  }
 
 /* validaores por css */

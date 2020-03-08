@@ -7,21 +7,37 @@
 {% block content %}
 <div class="col">
 
-    {% if items%}
-    Productos
-    <div class="col">
-        
-        {% for item in items %}
-        <div class="row">
+ 
+    <table>    
+        {% if table%}
+        <h1>
+            Litado de productos 
+        </h1>
+            
+        {% for col in table["columns"] %}
+  <th>
+
+      {{ col }}
+    </th>
+        {%endfor%}
+        {% for item in table["rows"] %}
+            <tr>
+    
+            
             {% for dato in item %}
-            <div>
-                {{dato}}
-            </div>
+        
+        <td>
+
+            {{dato}}
+        </td>
+          
             {% endfor %}
-        </div>
+
+        </tr>
         {% endfor %}
     </div>
     {% endif%}
+</table>
     
 </div>
     {% endblock %}
@@ -30,7 +46,7 @@
 {{super()}}
     <ul>
         {% for opcion in opciones %}
-            <li>{{ opciones.name }}</li>
+            <li>{{ opcion }}</li>
         {% endfor %}
     </ul>
 {% endblock %}

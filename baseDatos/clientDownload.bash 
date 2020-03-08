@@ -1,0 +1,21 @@
+#!/bin/bash
+echo "init dowload client " 
+
+cd ~/
+mkdir ~/cliente 
+cd ~/cliente
+
+echo "Baic "
+wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-basic-linux.x64-19.6.0.0.0dbru.zip
+unzip instantclient-basic-linux.x64-19.6.0.0.0dbru.zip
+
+echo "SQLplus  "
+wget wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-sqlplus-linux.x64-19.6.0.0.0dbru.zip
+unzip instantclient-sqlplus-linux.x64-19.6.0.0.0dbru.zip
+echo "SDK "
+wget wget https://download.oracle.com/otn_software/linux/instantclient/19600/instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip
+unzip instantclient-sdk-linux.x64-19.6.0.0.0dbru.zip
+
+echo "liberia "
+sudo apt-get install libaio1
+

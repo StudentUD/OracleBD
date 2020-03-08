@@ -1,4 +1,5 @@
 # Manual https://cx-oracle.readthedocs.io/en/latest/user_guide/sql_execution.html
+
 import cx_Oracle
 import pandas as pd
 
@@ -58,31 +59,35 @@ def execute_sentence(sentencia,tupla=()):
         cur = con.cursor()
         print(sentencia)
         cur.execute(sentencia,tupla)
-        listR=list(cur)
+    
+         #cur.description hace dta about each column : list
+        listCol=[e[0] for e in cur.description]
+        listRes=list(cur)
 
-        if listR==[]:
+        if listRes==[]:
             print("Any response")
 
         cur.close()
         con.close()
-        print("volando\n")
-        show_cur(listR)
+        show_cur(listCol)
+        show_cur(listRes)
+
 
     except cx_Oracle.DatabaseError as e:
-        print("Error") 
+        print("Error de BAse de datos") 
         v = show_error(e)
-    return listR  
+    return {"columns": listCol, "rows": listRes} 
 
 def show_error(e):
     errorObj, = e.args
     return  (errorObj.message, errorObj.code)
 
 def show_cur(curs):
-    print("resulado")
+    print("Resultado")
     for e in curs:
         print(e)
 
 
 
 def get_list_of_products():
-    return execute_sentence('select p.id, p.name, p.short_desc, p.suggested_whlsl_price, i.amount_in_stock, w.city, w.state from s_product p, s_inventory i, s_warehouse w where p.id=i.product_id and i.warehouse_id=w.id')
+    return execute_sentence('select p.id as Codigo, p.name as Nombre, p.short_desc as Descripcion, p.suggested_whlsl_price as Precio, i.amount_in_stock as Cantidad_Disponble, w.city as Ciudad, w.state as Estado from s_product p, s_inventory i, s_warehouse w where p.id=i.product_id and i.warehouse_id=w.id')
