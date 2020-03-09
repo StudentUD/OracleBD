@@ -63,7 +63,7 @@ def execute_sentence(sentencia,tupla=()):
         show_cur(listCol)
         show_cur(listRes)
     except cx_Oracle.DatabaseError as e:
-        print("Error de Base de datos") 
+        print("Error de Base de datos", e) 
         v = show_error(e)
     return {"columns": listCol, "rows": listRes}
 
@@ -91,6 +91,10 @@ def test_html(request):
 
 def get_client_by_phone(phone):
     return execute_sentence(' select id, name, phone from s_customer where phone=:1',(phone))
+
+def get_clients_lists():
+    return execute_sentence('select c.id, c.name from s_customer c',())
+
 
 def get_list_of_products():
     return execute_sentence('select p.id as Codigo, p.name as Nombre, p.short_desc as Descripcion, p.suggested_whlsl_price as Precio, i.amount_in_stock as Cantidad_Disponble, w.city as Ciudad, w.state as Estado from s_product p, s_inventory i, s_warehouse w where p.id=i.product_id and i.warehouse_id=w.id')

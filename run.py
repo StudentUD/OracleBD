@@ -33,6 +33,7 @@ def login():
             e = d['rows'][0]
             first_name,last_name,title=e   
             page = generate_route(title)
+            #return redirect(url_for(page))
             return redirect(url_for(page))
         else:
             error = 'Verifique usuario o contrasenia '
@@ -43,7 +44,8 @@ def login():
 @app.route("/sales_representative", methods=["GET"])
 def sales_representative():
     data =  manager.get_list_of_products()
-    return render_template('/roles/sales_representative.html', table = data, opciones=["Producto","Cliente"])
+    
+    return render_template('/roles/sales_representative.html', page_name='Lista de poductos',table = data)
 
 ## Administrador de bodega
 @app.route("/warehouse_manager")
@@ -72,6 +74,18 @@ def sales():
 def registro():
     return render_template('/registro.html')
 
+
+#@app.route('/list_clients',methods=["POST","GET"])
+#@app.route('/list_clients/<int:phone>',methods=["POST","GET"])
+#def list_clients():
+#    data = manager.get_client_by_phone(phone)
+#    return render_template('/roles/sales_clients.html',table= data )
+
+
+@app.route('/list_clients',methods=["POST","GET"])
+def list_clients():
+    data = manager.get_clients_lists()
+    return render_template('/roles/sales_clients.html', page_name = 'Lista de clientes',table= data )
 
 # Funciones
 def generate_route(u):

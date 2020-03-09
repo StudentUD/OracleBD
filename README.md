@@ -4,7 +4,6 @@
 - Oscar Bautista
 - Diego Hernandez
 
-
 ## Instalación 
 
 - Python 3 
@@ -24,13 +23,11 @@ cada vez que se instale una libreria requiere
 - Hacer copia de paquetes instalados ```pip3 freeze > requirements.txt ```
 - ver paquetes ```pip3 lsit ```
 
-
 #- ## Ejecutar por primera vez  o despues de adicion de paquetes 
 Si se acaba de clonar el repositorio se debe instalar las dependencias del proyecto, o si indica error 
 
 - Activar variable ```source venv-project/bin/activate ```
 - Instalar dependencias ```pip3 install -r requirements.txt ```
-
 
 # Creacion de base de datos
 
@@ -53,7 +50,6 @@ Es importate saber el nombre del servicio donde vamos a usar nuestra BD ```SELEC
 nos mostrar el  servicio que debemos utilizar
 - host puede ser el nombre del equipo o ip 
 - xepdb1 es el nombre del servicio 
-
 
 vamos a modificar nuestro tnsnames de aplicacion
 
@@ -81,7 +77,6 @@ Si no se encuebtra entonces
 
 **Se recomienda primero reinciar el oraclelistener y luego oracleService**
 
-
 ##### Cannot locate a 64-bit Oracle Client library
 intalcion de client  revisar los link [aqui](https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html)
 
@@ -105,7 +100,6 @@ Enlas verisones actuales no es necesario crear los enlaces simbolicos
 Importamos la variable 
 ```export LD_LIBRARY_PATH=$(pwd)``` Con el fin de poder ejecutar el ./sqlplus, si esta fuera de la carpeta ```export LD_LIBRARY_PATH=~/cliente/instantclient_19_6```
 
-
 ##### TNS listener 
 [Tns listener oracle stackoverflow]( https://stackoverflow.com/questions/13358656/oracle-client-ora-12541-tnsno-listener)
 1. Editar liter.ora Ubicado en la carpet HOME/network/admin/lister.ora
@@ -119,16 +113,10 @@ Por ultimo acceder a sqlplus y ejecutar los scripts que se encuntran en este rep
 
 ```start direccion_scriptOracle``` y luego lo mismo con postScript
 
-
-
-
-
 # Arrancar proyecto Flask 
 . Activar variable 
 - ```export FLASK_APP="run.py" ```
 - ```python run.py ```
-
-
 
 # Descripcion 
 
