@@ -1,22 +1,26 @@
-{% extends "base_template.html" %}
+{% extends "diseño/layout_base.html" %}
     
 {% block title %}
     Incio
 {% endblock %}
 
 {% block content %}
-<form id="login" class="col" action="/login" method="POST" novalidate>
-    <label for="txuser">Usuario</label>
-    <input type="text" id="txuser" name="user" value="" required>
-    
-    <label for="txpass"> Contraseña:</label>
-    <input type="password" id="txpass" name="password" value="" required><br>
-    
-    <input type="submit" value="Submit">
-    {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}</p>
-    {%endif%}
-  </form> 
+    <form id="login" class="col" action="/login" method="POST" novalidate>
+        <label for="txuser">Usuario</label>
+        <input type="text" id="txuser" name="user" value="" required>
+        
+        <label for="txpass"> Contraseña:</label>
+        <input type="password" id="txpass" name="password" value="" required><br>
+        
+        <input type="submit" value="Submit">
+        {% if error %}
+            <p class="error"><strong>Error:</strong> {{ error }}</p>
+        {%endif%}
+    </form> 
+    <a href="/registro">Registrarse</a>
 {% endblock %}
 
+{% block aside %} 
+    <br>
+{% endblock %}
   

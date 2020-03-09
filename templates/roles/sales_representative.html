@@ -1,0 +1,63 @@
+{% extends "admin/ordenes/layout_admin.html" %}
+    
+{% block title %}
+    Representante de Ventas 
+{% endblock %}
+
+{% block content %}
+    <div class="col"><table>    
+        {% if table%}
+            <h1> Listado de productos </h1>
+            {% for col in table["columns"] %}
+                <th> {{ col }} </th>
+            {% endfor %}
+            {% for item in table["rows"] %}
+                <tr>
+                    {% for dato in item %}
+                    <td> {{dato}} </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </div>
+        {% endif %}
+    </table></div>
+{% endblock %}
+
+{% block menu%}
+    {{super()}}
+    <ul>
+        {% for opcion in opciones %}
+            <li>{{ opcion }}</li>
+        {% endfor %}
+    </ul>
+    <form id="login" class="col" action="/login" method="POST" novalidate>
+        <label for="lblId">Id Orden</label>
+        <input type="text" id="txId" name="Id" value="" required>
+
+        <label for="lblIdCli">Id cliente</label>
+        <input type="text" id="txId" name="Id" value="" required>
+
+        <label for="lblDateOrd">Fecha de pedido</label>
+        <input type="date" id="txId" name="Id" value="" >
+
+        <label for="lblDateShip">Fecha de envio</label>
+        <input type="date" id="txId" name="Id" value="" >
+
+        <label for="lblIVentd">Id ventas</label>
+        <input type="text" id="txId" name="Id" value="" >
+
+        <label for="lblTotal">Total</label>
+        <input type="text" id="txId" name="Id" value="" >
+
+        <label for="lblTp">Tipo de pago</label>
+        <input type="text" id="txId" name="Id" value="" >
+
+        <label for="lblOrdComp">Orden completada</label>
+        <select name="transporte">
+            <option value="Y"> Si </option>
+            <option value="N"> No </option>
+        </select><br>
+
+        <input type="submit" value="Registrar">
+    </form> 
+{% endblock %}

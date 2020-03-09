@@ -1,0 +1,28 @@
+{% extends "admin/ordenes/layout_admin.html" %}
+    
+{% block title %}
+    Administrador de bodega
+{% endblock %}
+
+{% block content %}
+    <div class="col"><table>    
+        {% if table%}
+            <h1> Inventario </h1>
+            {% for col in table["columns"] %}
+                <th> {{ col }} </th>
+            {% endfor %}
+            {% for item in table["rows"] %}
+                <tr>
+                    {% for dato in item %}
+                    <td> {{dato}} </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </div>
+        {% endif %}
+    </table></div>
+{% endblock %}
+
+{% block menu%}a
+    {{super()}}
+{% endblock %}

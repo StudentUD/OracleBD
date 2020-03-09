@@ -1,0 +1,23 @@
+<!-- Pagina que toma una plantilla -->
+{% extends "diseño/layout_base.html" %}
+
+<!-- Bloques en la plantilla (Titulo, Aside, Contenido) -->  
+{% block title %}
+    Registro
+{% endblock %}
+
+{% block aside %} 
+    <form id="checkin" class="col" action="/login" method="POST" novalidate>
+        <label for="txuser">Nombre</label>
+        <input type="text" id="txtnombre" name="user" value="" required>
+        
+        <label for="txpass"> Apellido:</label>
+        <input type="password" id="txtapellido" name="apellido" value="" required><br>
+        
+        <input type="submit" value="Registrar">
+    </form>
+{% endblock %}
+
+{% block content %}
+    (Usted) quien puede gestionar (asignar y desasignar) los roles previamente definidos.
+{% endblock %}
