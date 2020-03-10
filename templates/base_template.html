@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" href="{{ url_for("static", filename="css/estilo.css") }}">
+	<script src="{{ url_for("static", filename="js/validator.js") }}"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">	 
+</head>
+</html>
+	<body>
+		<header>
+			<nav class="row">
+				<div class = "logotipo">
+					<img src = "{{ url_for("static", filename="oraclogo.png") }}" alt="logotipo">
+				</div>
+				<ul class="center-vi"><li><a href="#">Empleados DB</a></li></ul>
+				<div class="col">
+					{% set user_nav = request.args.getlist("user")%}
+					{%for e in user_nav%}
+					<div class="row">
+						{{e}}
+					</div>
+					{%endfor%}
+				{{request.args.getlist("user")}}
+				</div>
+
+			</nav>
+		</header>
+		
+		<section class = "container"> 
+			{% block aside %} {% endblock %}
+				<article class="center-hi">
+			{% block content %}{% endblock %}
+			</article>
+		</section>
+		
+		<footer>
+            <h3>Bases de Datos 2</h3>
+            <p>Oscar Bautista - Diego Hernandez - 2020</p>
+		</footer>
+	</body>
+</html>

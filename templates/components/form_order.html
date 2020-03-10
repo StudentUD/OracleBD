@@ -1,56 +1,85 @@
-<form id="login" class="col" action="#" method="POST" novalidate>
+<form id="orden" class="col" action="#" method="POST" novalidate>
 
 
-<div class="row">
     {%if sales_rep %}
-    <div class="col">
-        <label for="lblIVentd">Id ventas</label>
-        <input type="text" id="txId" name="Id" value="{{sales_rep['id']}}">
-    {%else%}
-    El usuario no puede generar ordenes
-    {%endif%}
-    </div>
-</div>
-   
-    
-    <div class="row">
-        <div class="col">
-            {%if customer %}
-            <label for="lblIdCli">Id cliente</label>
-            <input type="text" id="txId" name="Id" value="{{customer['id']}}" required>
-            Cliente: {{customer}}
-            
-            {%else%}
-
-            <a href="list_clients">Buscar clientes</a>
-            {%endif%}
+        <div class="row">
+            <div class="col">
+                <label for="lblIVentd">Id ventas</label>
+                <input type="text" id="txId" name="Id" value="{{sales_rep['id']}}">
+            </div>
         </div>
-    </div>
-
-    <label for="lblDateOrd">Fecha de pedido</label>
-    <input type="date" id="txId" name="Id" value="">
-
-    <label for="lblDateShip">Fecha de envio</label>
-    <input type="date" id="txId" name="Id" value="">
-
-    <label for="lblId">Id Orden</label>
-    <input type="text" id="txId" name="Id" value="" required>
+    {%else%}
+        El usuario no puede generar ordenes
+    {%endif%}
 
 
-    <label for="lblTotal">Total</label>
-    <input type="text" id="txId" name="Id" value="">
+    {%if sales_rep %}
+        <div class="row">
+            <div class="col">
+                {%if customer %}
+                <label for="lblIdCli">Id cliente</label>
+                <input type="text" id="txId" name="Id" value="{{customer['id']}}" required>
+                Cliente: {{customer}}
 
-    <label for="lblTp">Tipo de pago</label>
-    <select name="slcTp">
-        <option value="credit"> Crédito </option>
-        <option value="cash"> efectivo </option>
-    </select><br>
+                {%else%}
 
-    <label for="lblOrdComp">Orden completada</label>
-    <select name="slcOrdComp">
-        <option value="Y"> Si </option>
-        <option value="N"> No </option>
-    </select><br>
+                <a href="url_for("list_clients")">Buscar clientes</a>
+                {%endif%}
+            </div>
+        </div>
 
-    <input type="submit" value="Registrar">
+        <div class="row">
+            <div class="col">
+                <label for="lblDateOrd">Fecha de pedido</label>
+                <input type="date" id="txId" name="Id" value="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="lblDateShip">Fecha de envio</label>
+                <input type="date" id="txId" name="Id" value="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+
+                <label for="lblId">Id Orden</label>
+                <input type="text" id="txId" name="Id" value="" required>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="lblTotal">Total</label>
+                <input type="text" id="txId" name="Id" value="">
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="lblTp">Tipo de pago</label>
+                <select name="slcTp">
+                    <option value="credit"> Crédito </option>
+                    <option value="cash"> efectivo </option>
+                </select><br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="lblOrdComp">Orden completada</label>
+                <select name="slcOrdComp">
+                    <option value="Y"> Si </option>
+                    <option value="N"> No </option>
+                </select><br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="submit" value="Registrar">
+            </div>
+        </div>
+    {%endif%}
+
 </form>

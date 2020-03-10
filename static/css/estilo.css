@@ -96,7 +96,7 @@ article{
   }
   
   input:valid {
-	/* box-shadow: 2px 2px 2px green; */
+	 box-shadow: 2px 2px 2px green;
   }
 
 
@@ -109,4 +109,9 @@ article{
   }
   form label{
 	  padding: 10px 0;
+  }
+
+ #orden .row{
+	  margin-top: 5px;
+
   }

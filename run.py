@@ -1,4 +1,6 @@
-from flask import Flask,render_template, request, redirect, url_for
+from flask import Flask,render_template, request, redirect, url_for, session 
+from flask import  session # debo indicar app.secret_key ="bases2"
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 from forms import SignupForm, PostForm
@@ -11,6 +13,8 @@ import manager
 
 app = Flask(__name__)
 api = Api(app)
+app.secret_key ="bases2"
+#app.permanent_session_lifetime = timedelta(minutes=5)
 
 # Ruta inicial
 @app.route("/")
@@ -29,9 +33,18 @@ def login():
     manager.test(request)
     if request.method == 'POST': 
         d = manager.verify_login(request.form['user'], request.form['password'])
+
+        session['id']=request.form['password']
+        session['user']=request.form['user']
+
         if d['rows']!=[]:
-            e = d['rows'][0]
-            first_name,last_name,title=e   
+            user = d['rows'][0]
+
+            first_name,last_name,title=user   
+            session['first_name']=first_name
+        
+            
+           
             page = generate_route(title)
             #return redirect(url_for(page))
             return redirect(url_for(page))
@@ -44,8 +57,8 @@ def login():
 @app.route("/sales_representative", methods=["GET"])
 def sales_representative():
     data =  manager.get_list_of_products()
-    
-    return render_template('/roles/sales_representative.html', page_name='Lista de poductos',table = data)
+    sales_rep = {"id":15}
+    return render_template('/roles/sales_representative.html', page_name='Lista de poductos',table = data, sales_rep = sales_rep)
 
 ## Administrador de bodega
 @app.route("/warehouse_manager")
