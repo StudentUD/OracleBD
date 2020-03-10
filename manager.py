@@ -13,9 +13,10 @@ def show_error(e):
     return  (errorObj.message, errorObj.code)
 
 def show_cur(curs):
-    print("Resultado")
+    #print("Resultado")
     for e in curs:
-        print(e)
+        #print(e)
+        e
 
 def verify_satus():
     try:
@@ -28,19 +29,19 @@ def verify_satus():
 
 # Metodo verifica usuario y contraseña
 def test(request):
-    print("URL:"+request.url)
-    print("Método:"+request.method)
+    #print("URL:"+request.url)
+    #print("Método:"+request.method)
     for item,value in request.headers.items():
-        print("{}:{}".format(item,value))    
-        print("información en formularios (POST):")
+        "{}:{}".format(item,value)
+        #print("información en formularios (POST):")
     for item,value in request.form.items():
-        print("{}:{}".format(item,value))
-        print("información en URL (GET)")
+        "{}:{}".format(item,value)
+        #print("información en URL (GET)")
     for item,value in request.args.items():
-        print("{}:{}".format(item,value))   
-        print("Ficheros:")
+        "{}:{}".format(item,value)
+        #print("Ficheros:")
     for item,value in request.files.items():
-        print("{}:{}".format(item,value))
+        "{}:{}".format(item,value)
 
 # Metodo que recibe las consultas y returna el resultado
 def execute_sentence(sentencia,tupla=()):
@@ -100,4 +101,8 @@ def get_list_of_products():
     return execute_sentence('select p.id as Codigo, p.name as Nombre, p.short_desc as Descripcion, p.suggested_whlsl_price as Precio, i.amount_in_stock as Cantidad_Disponble, w.city as Ciudad, w.state as Estado from s_product p, s_inventory i, s_warehouse w where p.id=i.product_id and i.warehouse_id=w.id')
 
 def get_inventary():
-    return execute_sentence('SELECT w.country AS Pais, w.state as Estado, r.name as Region, w.address as Direccion, i.amount_in_stock as N_Stock, i.reorder_point as Pto_Pedido, i.max_in_stock as Max_Stock, i.out_of_stock_explanation as Agotado, i.restock_date as F_Reposicion FROM s_warehouse w, s_region r, s_inventory i WHERE w.region_id = r.id AND i.warehouse_id = w.id;')
+    return execute_sentence('SELECT w.country AS Pais, w.state as Estado, r.name as Region, w.address as Direccion, i.amount_in_stock as N_Stock, i.reorder_point as Pto_Pedido, i.max_in_stock as Max_Stock, i.out_of_stock_explanation as Agotado, i.restock_date as F_Reposicion FROM s_warehouse w, s_region r, s_inventory i WHERE w.region_id = r.id AND i.warehouse_id = w.id')
+
+def asignar_rol(rv):
+    if "s" in ''.join(rv[0]) :
+        print("t")

@@ -33,7 +33,6 @@ def login():
             e = d['rows'][0]
             first_name,last_name,title=e   
             page = generate_route(title)
-            #return redirect(url_for(page))
             return redirect(url_for(page))
         else:
             error = 'Verifique usuario o contrasenia '
@@ -43,8 +42,7 @@ def login():
 ## Representante de ventas
 @app.route("/sales_representative", methods=["GET"])
 def sales_representative():
-    data =  manager.get_list_of_products()
-    
+    data =  manager.get_list_of_products() 
     return render_template('/roles/sales_representative.html', page_name='Lista de poductos',table = data)
 
 ## Administrador de bodega
@@ -53,27 +51,32 @@ def warehouse_manager():
     data = manager.get_inventary()
     return render_template('/roles/warehouse_manager.html', table = data)
 
+## Administrador de usuario
+@app.route("/user_administrator", methods = ['GET', 'POST'])
+def user_administrator():
+    rv = []
+    if request.method == 'POST':
+        rv = [request.form.getlist('rv')]
+        rv.append(request.form.getlist('ab'))
+        rv.append(request.form.getlist('vprh'))
+        manager.asignar_rol(rv)
+    return render_template('/roles/user_administrator.html', rol1 = rv  )
+
 ## Vicepresidente de recursos Humanos
 @app.route("/vprh", methods=["GET"])
 def vprh():
     return render_template('.html')
-
-## Administrador de usuario
-@app.route("/admin_user", methods=["GET"])
-def adminUser():
-    return render_template('.html')
+  
+# Registro
+@app.route("/registro")
+def registro():
+    return render_template('/registro.html')
 
 ##
 @app.route("/sales", methods=["GET"])
 def sales():
     item_list =  manager.execute_sentence("select * from s_item")
     return jsonify(item_list)
-    
-# Registro
-@app.route("/registro")
-def registro():
-    return render_template('/registro.html')
-
 
 #@app.route('/list_clients',methods=["POST","GET"])
 #@app.route('/list_clients/<int:phone>',methods=["POST","GET"])
