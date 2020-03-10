@@ -1,0 +1,41 @@
+{% extends "diseño/layout_base.html" %}
+    
+{% block title %}
+    Administrador de usuario
+{% endblock %}
+
+{% block aside %} 
+{{ rol1 }}
+{% endblock %}
+
+{% block content %}
+    <form id="usad" class="col" action="/user_administrator" method="POST" >
+        <table class="tg">
+            <tr>
+              <th class="tg-0lax"></th>
+              <th class="tg-1wig">Seleccionar</th>
+              <th class="tg-1wig">Insertar</th>
+              <th class="tg-1wig">Actualizar</th>
+            </tr>
+            <tr>
+              <td class="tg-1wig">Representante de Ventas</td>
+              <td class="tg-baqh"><input type="checkbox" name="rv" value="s"></td>
+              <td class="tg-baqh"><input type="checkbox" name="rv" value="i"></td>
+              <td class="tg-baqh"><input type="checkbox" name="rv" value="u" disable></td>
+            </tr>
+            <tr>
+              <td class="tg-1wig">Administrador de Bodega</td>
+              <td class="tg-baqh"><input type="checkbox" name="ab" value="s"></td>
+              <td class="tg-baqh"><input type="checkbox" name="ab" value="i"></td>
+              <td class="tg-baqh"><input type="checkbox" name="ab" value="u"></td>
+            </tr>
+            <tr>
+              <td class="tg-1wig">Vicepresidente de RRHH</td>
+              <td class="tg-baqh"><input type="checkbox" name="vprh" value="s"></td>
+              <td class="tg-baqh"><input type="checkbox" name="vprh" value="i"></td>
+              <td class="tg-baqh"><input type="checkbox" name="vprh" value="u"></td>
+            </tr>
+        </table><br>
+        <input type="submit" value="Submit">
+    </form> 
+{% endblock %}

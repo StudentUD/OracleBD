@@ -1,7 +1,7 @@
-/* Representante de Ventas - sales_representative */
+/* ====== Representante de Ventas - sales_representative  ====== */
 --- Empleado que solo puede generar órdenes
 
----lista de productos para sales ----------------------------------------------
+---lista de productos para sales ---
 SELECT p.id as Codigo, p.name as Nombre, p.short_desc as Descripcion, 
     p.suggested_whlsl_price as Precio, i.amount_in_stock as Cantidad_Disponble, w.city as Ciudad, 
     w.state as Estado 
@@ -13,7 +13,7 @@ idOren = SELECT count(*) FROM s_emp + 1;
 INSERT INTO s_ord (customer_id, date_ordered, sales_rep_id) 
 VALUES(201, SYSDATE,11)
 
-/* Administrador de Bodega  */
+/* ====== Administrador de Bodega - Warehouse Manager ======*/
 --- Empleado que puede gestionar las bodegas y los inventarios de la región a la que pertenece.
 
 SELECT w.country AS Pais, w.state as Estado, r.name as Region, 
@@ -23,10 +23,15 @@ SELECT w.country AS Pais, w.state as Estado, r.name as Region,
 FROM s_warehouse w, s_region r, s_inventory i 
 WHERE w.region_id = r.id AND i.warehouse_id = w.id;
 
-/* Vicepresidente de RRHH   */
+/* ====== Vicepresidente de RRHH ======  */
+--- Gestionar Empleados y nómina ---
 
+/* ====== Administrador de Usuario - User Administrator ======*/
+--- quien puede gestionar (asignar y desasignar) los roles previamente definidos ---
+--- consultar los empleados existentes y asignarles uno de los roles definidos previamente --
 
-/* Administrador de Usuario */
+Tenga en cuenta que cada rol solo puede hacer lo definido y si es necesario investigar para
+cumplir el objetivo lo deben hacer.
 
 --- crear el administrador ---
 INSERT INTO s_title VALUES ('User administrator');
@@ -40,6 +45,22 @@ INSERT INTO s_emp_title VALUES (26,'',null, 50)
 SELECT * 
 FROM s_emp_title, s_emp, s_title, s_dept
 WHERE
+
+
+/* ====== ROL ====== */
+
+CREATE USER usuario#1 WITH PASSWORD 'xxxxxx';
+REVOKE consulta# from usuario#a
+
+CREATE ROLE sales_representative;
+CREATE ROLE warehouse_manager;
+CREATE ROLE vprh;
+
+GRANT SELECT on s_product, s_inventory, s_warehouse  TO sales_representative;
+GRANT INSERT on s_ord  TO sales_representative;
+
+GRANT SELECT on s_product, s_inventory, s_warehouse  TO sales_representative;
+GRANT INSERT on s_ord  TO sales_representative;
 
 
 ---------------------------------------------------------------------------------------------------
@@ -62,3 +83,4 @@ WHERE e.id=et.emp_id AND et.title= t.title;
 
 SELECT e.id, e.last_name, e.first_name, e.start_date, e.comments, et.title, 
 WHERE e.id=et.emp_id AND et.title= t.title;
+
