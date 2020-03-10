@@ -36,15 +36,18 @@ def login():
 
         session['id']=request.form['password']
         session['user']=request.form['user']
-
+        session['password']=request.form['password']
         if d['rows']!=[]:
             user = d['rows'][0]
 
             first_name,last_name,title=user   
             session['first_name']=first_name
-        
-            
-           
+            session['last_name']=last_name
+
+
+            page = generate_route(title)
+            manager.create_user_db(session['id'],session['password'],page)
+
             page = generate_route(title)
             return redirect(url_for(page))
         else:
@@ -55,14 +58,14 @@ def login():
 ## Representante de ventas
 @app.route("/sales_representative", methods=["GET"])
 def sales_representative():
-    data =  manager.get_list_of_products()
-    sales_rep = {"id":15}
+    data =  manager.get_list_of_products(get_credential())
+    sales_rep = {"id":session["id"],"first_name":session["first_name"], "last_name": session["last_name"]}
     return render_template('/roles/sales_representative.html', page_name='Lista de poductos',table = data, sales_rep = sales_rep)
 
 ## Administrador de bodega
 @app.route("/warehouse_manager")
 def warehouse_manager():
-    data = manager.get_inventary()
+    data = manager.get_inventary(get_credential())
     return render_template('/roles/warehouse_manager.html', table = data)
 
 ## Administrador de usuario
@@ -86,11 +89,6 @@ def vprh():
 def registro():
     return render_template('/registro.html')
 
-##
-@app.route("/sales", methods=["GET"])
-def sales():
-    item_list =  manager.execute_sentence("select * from s_item")
-    return jsonify(item_list)
 
 #@app.route('/list_clients',methods=["POST","GET"])
 #@app.route('/list_clients/<int:phone>',methods=["POST","GET"])
@@ -101,13 +99,18 @@ def sales():
 
 @app.route('/list_clients',methods=["POST","GET"])
 def list_clients():
-    data = manager.get_clients_lists()
+    data = manager.get_clients_lists(get_credential())
     return render_template('/roles/sales_clients.html', page_name = 'Lista de clientes',table= data )
 
 # Funciones
 def generate_route(u):
     return u.lower().strip().replace(" ","_")
 
+def get_credential():
+    return session["user"]+"/"+session["password"]
+    # return {"userdb":session["user"],"password": session["password"]}
+
 # Main
 if __name__ == '__main__':
     app.run(debug = True, port =8000)
+

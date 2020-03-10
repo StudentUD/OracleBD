@@ -4,7 +4,7 @@ import cx_Oracle
 import pandas as pd
 
 # Direccion de acceso
-url_conexion= 'app/flask@xepdb1'
+url_db = '@xepdb1'
 
 # Metodos que verifica el estado de conexion
 
@@ -15,9 +15,8 @@ def show_error(e):
 def show_cur(curs):
     #print("Resultado")
     for e in curs:
-        #print(e)
-        e
-
+        print(e)
+     
 def verify_satus():
     try:
         con = cx_Oracle.connect(url_conexion)
@@ -44,10 +43,11 @@ def test(request):
         "{}:{}".format(item,value)
 
 # Metodo que recibe las consultas y returna el resultado
-def execute_sentence(sentencia,tupla=()):
+def execute_sentence(sentencia,tupla=(),usuario = "app/flask"):
     listRes=[]
     listCol=[]
     try:
+        url_conexion =usuario+url_db
         con = cx_Oracle.connect(url_conexion)
         cur = con.cursor()
         print(sentencia)
@@ -90,19 +90,24 @@ def test_html(request):
         cad+="{}:{}<br/>".format(item,value)
     # print(cad)
 
-def get_client_by_phone(phone):
-    return execute_sentence(' select id, name, phone from s_customer where phone=:1',(phone))
+def get_client_by_phone(phone,user):
+    return execute_sentence(' select id, name, phone from s_customer where phone=:1',(phone),user)
 
-def get_clients_lists():
+def get_clients_lists(user):
     return execute_sentence('select c.id, c.name from s_customer c',())
 
+def get_list_of_products(user):
+    return execute_sentence('select p.id as Codigo, p.name as Nombre, p.short_desc as Descripcion, p.suggested_whlsl_price as Precio, i.amount_in_stock as Cantidad_Disponble, w.city as Ciudad, w.state as Estado from s_product p, s_inventory i, s_warehouse w where p.id=i.product_id and i.warehouse_id=w.id',user)
 
-def get_list_of_products():
-    return execute_sentence('select p.id as Codigo, p.name as Nombre, p.short_desc as Descripcion, p.suggested_whlsl_price as Precio, i.amount_in_stock as Cantidad_Disponble, w.city as Ciudad, w.state as Estado from s_product p, s_inventory i, s_warehouse w where p.id=i.product_id and i.warehouse_id=w.id')
-
-def get_inventary():
-    return execute_sentence('SELECT w.country AS Pais, w.state as Estado, r.name as Region, w.address as Direccion, i.amount_in_stock as N_Stock, i.reorder_point as Pto_Pedido, i.max_in_stock as Max_Stock, i.out_of_stock_explanation as Agotado, i.restock_date as F_Reposicion FROM s_warehouse w, s_region r, s_inventory i WHERE w.region_id = r.id AND i.warehouse_id = w.id')
+def get_inventary(user):
+    print(user)
+    return execute_sentence('SELECT w.country AS Pais, w.state as Estado, r.name as Region, w.address as Direccion, i.amount_in_stock as N_Stock, i.reorder_point as Pto_Pedido, i.max_in_stock as Max_Stock, i.out_of_stock_explanation as Agotado, i.restock_date as F_Reposicion FROM s_warehouse w, s_region r, s_inventory i WHERE w.region_id = r.id AND i.warehouse_id = w.id',user)
 
 def asignar_rol(rv):
     if "s" in ''.join(rv[0]) :
         print("t")
+
+ 
+def create_user_db(usuario,password, rol):
+    execute_sentence("create user :1 identified by :2",(usuario,password))
+    execute_sentence("grant :1 to :2",(rol,usuario))
