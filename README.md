@@ -75,6 +75,8 @@ Si no se encuebtra entonces
 [Ver solucion  adaptador ](http://www.rebellionrider.com/sql-developer-error-the-network-adapter-could-not-establish-the-connection/)
 
 
+Otro error es que la base se desmonta del servidor,  al digitar el  ```lsnrctl services ``` indica la la isntancia esta en estado *** UNKNOW*** por ello necesitamos, entrar como ```sqlplus / as sysdba``` acceso por medio de auitenticacion de usuario, luego en arramcar la base de datos en SQL> STARTUP 
+
 **Se recomienda primero reinciar el oraclelistener y luego oracleService**
 
 ##### Cannot locate a 64-bit Oracle Client library
