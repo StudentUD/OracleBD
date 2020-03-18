@@ -53,6 +53,7 @@ nos mostrar el  servicio que debemos utilizar
 
 vamos a modificar nuestro tnsnames de aplicacion
 
+- por medio de  ```systeminfo``` pudo obtner el nombre del host
 <pre><code>
 XE =
   (DESCRIPTION =
@@ -68,6 +69,9 @@ XE =
 
 ``` lsnrctl status``` te permite ver si es listener esta activo 
 Si no se encuebtra entonces 
+
+
+- Para hace un ping al servidor podemos usar ```tnsping nombre_servicio``` ejemplo tnsping xe
 
 ``` lsnrctl start ``` si no carga ir a services.msc
 
